@@ -21,10 +21,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`min-h-screen flex items-center bg-earthy-beige`}
       >
         {children}
       </body>
+
     </html>
   );
 }

@@ -35,7 +35,7 @@ export const FormProvider = ({ children }) => {
       { question: "Anything else you'd like me to know?", answer: "" },
     ],
     other: [
-      { question: "Is their any legal information that needs to be made clear (ingredients, 18+ product, etc)", answer: "" },
+      { question: "Is there any legal information that needs to be made clear (ingredients, 18+ product, etc)", answer: "" },
     ]
   });
 
@@ -53,51 +53,18 @@ export const FormProvider = ({ children }) => {
   }, []);
 
   const loadForm = async (id) => {
-    const { data } = await supabase.from('client_forms').select('*').eq('id', id).single();
-    if (data) {
+    const { data, error } = await supabase.from('client_forms').select('*').eq('id', id).single();
+    if(error) {
+      console.error('Error loading form:', error);
+      return;
+    }
+    
+      console.log('Form loaded:', data);
       setFormData(data.form_data);
       setFormId(id);
-    }
+
   };
 
-
-  const handleInputChange = (category, questionIndex, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [category]: prev[category].map((q, i) =>
-        i === questionIndex ? { ...q, answer: value } : q
-      ),
-    }));
-  };
-
-  const handleSubmit = async () => {
-    // await saveForm();
-    // alert('Form submitted!');
-    console.log(formData); 
-    
-  };
-
-  const nextSlide = () => {
-    const currentCategory = categories[currentCategoryIndex];
-    const isLastQuestionInCategory = currentSlide === formData[currentCategory].length - 1;
-  
-    if (isLastQuestionInCategory) {
-      setCurrentCategoryIndex((prev) => Math.min(prev + 1, categories.length - 1));
-      setCurrentSlide(0);
-    } else {
-      setCurrentSlide((prev) => prev + 1);
-    }
-  };
-  
-  const prevSlide = () => {
-    if (currentSlide === 0) {
-      setCurrentCategoryIndex((prev) => Math.max(prev - 1, 0));
-      const previousCategory = categories[Math.max(currentCategoryIndex - 1, 0)];
-      setCurrentSlide(formData[previousCategory].length - 1);
-    } else {
-      setCurrentSlide((prev) => prev - 1);
-    }
-  };
 
   const currentCategory = categories[currentCategoryIndex];
 
@@ -115,10 +82,6 @@ export const FormProvider = ({ children }) => {
         setCurrentSlide,
         setCurrentCategoryIndex,
         loadForm,
-        handleInputChange,
-        handleSubmit,
-        nextSlide,
-        prevSlide,
       }}
     >
          <CategoryTracker categories={categories} currentCategoryIndex={currentCategoryIndex} formData={formData} />

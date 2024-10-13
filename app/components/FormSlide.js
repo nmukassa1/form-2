@@ -1,8 +1,8 @@
 import { useFormContext } from "@/context/FormContext";
 
-export default function FormSlide({ question, answer, onChange }) {
+export default function FormSlide({ question, answer, onChange, questionIndex, value }) {
 
-  const { formData, setFormData } = useFormContext();
+  const { formData, setFormData, currentCategory } = useFormContext();
 
   const handleInputChange = (category, questionIndex, value) => {
     setFormData((prev) => ({
@@ -20,7 +20,8 @@ export default function FormSlide({ question, answer, onChange }) {
           <textarea
             value={answer}
             onChange={(e) => {
-              onChange(e);
+              // onChange(e);
+              handleInputChange(currentCategory, questionIndex, e.target.value);
               e.target.style.height = 'auto';
               e.target.style.height = `${e.target.scrollHeight}px`;
             }}

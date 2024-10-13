@@ -20,7 +20,8 @@ export default function Slide() {
                 key={questionIndex}
                 question={q.question}
                 answer={q.answer}
-                onChange={(e) => handleInputChange(currentCategory, questionIndex, e.target.value)}
+                questionIndex={questionIndex}
+                // onChange={(e) => handleInputChange(currentCategory, questionIndex, e.target.value)}
             />
         ))}
     </div>

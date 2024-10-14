@@ -143,7 +143,7 @@ export default function NavigationButtons() {
         ): (
           <div>
             <h2>Form Submited</h2>
-            <p>I'll will be in touch shortly</p>
+            <p>I&apos;ll will be in touch shortly</p>
             <small>Nyah Mukassa</small>
             <br />
             <small>nmukassa1@gmail.com</small>

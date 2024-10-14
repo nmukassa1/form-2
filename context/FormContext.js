@@ -59,12 +59,30 @@ export const FormProvider = ({ children }) => {
       return;
     }
     
-      console.log('Form loaded:', data);
-      setFormData(data.form_data);
-      setFormId(id);
+     // Sort the keys of form_data
+    const sortedFormData = {};
+
+    // const keys = Object.keys(data.form_data).map(key => key.toLowerCase());
+    // console.log('keys:', keys);
+    
+    // const order = ['about', 'brandStyle', 'inspiration', 'whatYouOffer', 'other'];
+    // keys.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+
+
+    const keys = Object.keys(data.form_data).sort((a, b) => {
+      const order = ['about', 'brandStyle', 'inspiration', 'whatYouOffer', 'other'];
+      return order.indexOf(a) - order.indexOf(b);
+    });
+  
+
+    keys.forEach(key => {
+      sortedFormData[key] = data.form_data[key];
+    });
+
+    setFormData(sortedFormData);
+    setFormId(id);
 
   };
-
 
   const currentCategory = categories[currentCategoryIndex];
 
